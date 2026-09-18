@@ -47,15 +47,12 @@
 <script>
     const registerBtn = document.getElementById("registerBtn");
 
-    // ✅ Toast Function
-
+    // Toast Function
     function showToast(message, type = "success") {
         const toast = document.getElementById("toast");
 
         toast.textContent = message;
-
         toast.className = "toast";
-
         toast.classList.add("show", type);
 
         setTimeout(() => {
@@ -70,34 +67,73 @@
         const password = document.getElementById("password").value;
         const confirmPassword = document.getElementById("confirmPassword").value;
 
-         // 🔴 Validation
+        // Username validation
+        if (username.length === 0) {
+            showToast("Username is required", "error");
+            return;
+        }
+
+        // Password length validation
+        if (password.length < 8) {
+            showToast("Password must be at least 8 characters", "error");
+            return;
+        }
+
+        // Confirm password validation
         if (password !== confirmPassword) {
             showToast("Passwords do not match", "error");
             return;
         }
 
-        // 🔄 Loading
+        // Loading
         registerBtn.disabled = true;
         registerBtn.innerText = "Registering...";
 
         try {
             const response = await fetch("http://localhost:8080/auth/register", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ username, password})
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
             });
 
             const data = await response.text();
 
             if (response.ok) {
-                // ✅ Store toast for login page
-                localStorage.setItem("toastMessage", "Registered successfully! Please login.");
 
-                // Redirect to login
+                // Registration successful
+                localStorage.setItem(
+                    "toastMessage",
+                    "Registered successfully! Please login."
+                );
+
                 window.location.href = "login.html";
 
             } else {
-                showToast(data.message || "Registration failed", "error");
+
+                // Try to read backend JSON error
+                try {
+                    const errorData = JSON.parse(data);
+
+                    if (errorData.password) {
+                        showToast(errorData.password, "error");
+
+                    } else if (errorData.username) {
+                        showToast(errorData.username, "error");
+
+                    } else {
+                        showToast("Registration failed", "error");
+                    }
+
+                } catch (error) {
+
+                    // Backend returned plain text
+                    showToast(data || "Registration failed", "error");
+                }
             }
 
         } catch (err) {
