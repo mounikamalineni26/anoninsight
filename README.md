@@ -22,6 +22,15 @@ This system solves that problem by offering a **secure anonymous communication p
 
 ---
 
+## 🎥 Project Demo
+
+Watch the full working demo of AnonInsight here:
+
+👉 [Click to view demo video](https://drive.google.com/file/d/1V1aNuVmvoLTSLGlQ6eHULWA3bQJFvCIg/preview)
+
+---
+
+
 ## ⭐ Key Highlights
 
 - 🚀 End-to-end full-stack application  
@@ -100,7 +109,7 @@ Student → Submit Feedback → MySQL Database → Spring Boot Backend → Admin
 
 ### 1. Clone the repository  
 ```bash
-git clone https://github.com/mounikamalineni26/feedback-portal.git
+git clone https://github.com/mounikamalineni26/anoninsight.git
 ```
 
 ### 2. Open in IDE  
@@ -139,7 +148,7 @@ http://localhost:8080
 ### Submit Feedback  
 ![Feedback](images/04-submit-feedback.png)  
 
-### Admin Dashboard  
+### Admin Insights Dashboard  
 ![Dashboard](images/05-admin-dashboard.png)  
 
 ---
